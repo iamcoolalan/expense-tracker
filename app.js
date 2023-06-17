@@ -1,5 +1,6 @@
 const express = require('express')
 const exhbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 
 if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config()
@@ -15,6 +16,7 @@ app.engine('hbs', exhbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(routes)
 
 app.listen(port, () => {
