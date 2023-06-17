@@ -2,25 +2,31 @@ header nav {
   padding: 8px 16px;
 }
 
-#record a {
+/* index.hbs (home page) */
+#home #record a {
   font-size: 20px;
   text-decoration: none;
   color: black;
 }
 
-#record a:hover {
+#home #total-amount{
+  font-size: 70px;
+  color: rgb(241, 135, 6);
+}
+
+#home #record a:hover {
   color: gray;
 }
 
-#record li{
+#home #record li{
   height: 76px;
 }
 
-#record-function li{
+#home #record-function li{
   border: none;
 }
 
-#category {
+#home #category {
   font-size: 20px;
 
   width: 100%;
@@ -30,7 +36,7 @@ header nav {
   display: block;
 }
 
-#new-btn {
+#home #new-btn {
   font-size: 20px;
 
   width: 30%;
@@ -39,7 +45,19 @@ header nav {
   display: block;
 }
 
-#total-amount{
-  font-size: 70px;
-  color: rgb(241, 135, 6);
+/* new.hbs (new page) */
+#new{
+  padding: 5% 25%;
+}
+
+#new label{
+  font-size: 20px;
+}
+
+#new p{
+  font-size: 15px;
+}
+
+#new button{
+  width: 100%;
 }
