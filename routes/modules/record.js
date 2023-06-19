@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const Record = require('../../models/record')
+const Category = require('../../models/category')
 
 router.get('/new', (req, res) => {
   res.render('new')
@@ -9,10 +10,19 @@ router.get('/new', (req, res) => {
 
 router.post('/new',(req, res) => {
   const newRecord = req.body
-  
-  Record.create(newRecord)
-    .then(() => res.redirect('/'))
+  const category = req.body.category
+
+  Category.findOne({ name: category })
+    .then(category => {
+      Record.create({
+        ...newRecord,
+        categoryId : category._id
+      })
+      .then(() => res.redirect('/'))
+      .catch(err => console.log(err))
+    })
     .catch(err => console.log(err))
+
 })
 
 module.exports = router
