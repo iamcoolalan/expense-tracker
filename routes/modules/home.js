@@ -5,6 +5,8 @@ const Record = require('../../models/record')
 const Category = require('../../models/category')
 const category = require('../../models/category')
 
+let totalAmount = 0
+
 router.get('/', (req, res) => {
 
   Record.find()
@@ -13,6 +15,9 @@ router.get('/', (req, res) => {
       const light = `<li class="list-group-item list-group-item-light">`
       const dark = `<li class="list-group-item list-group-item-dark">`
       let isLight = true
+      
+      //先歸零
+      totalAmount = 0
 
       //只擷取資料庫中的年、月、日
       //toISOString 可以回傳一個ISO格式的字串 ex."2011-10-05T14:48:00.000Z"
@@ -29,6 +34,9 @@ router.get('/', (req, res) => {
           isLight = true
         }
 
+        //計算總花費金額
+        totalAmount += record.amount
+
         //return Category.findOne... 將此函數傳回promise， 這樣promise才會等待此異步處理完成
         //return record 回傳變更結果，才可以在後續的處理中取用物件內容
         return Category.findOne({ _id: record.categoryId })
@@ -43,7 +51,7 @@ router.get('/', (req, res) => {
       return Promise.all(promises)
     })
     .then(records => {
-      res.render('index', { records })
+      res.render('index', { records, totalAmount })
     })
     .catch(err => console.log(err))
 })
