@@ -49,7 +49,9 @@
         {{#each records}}
         <li class="list-group-item list-group-item-light d-flex align-items-center">
           <a href="/record/{{ this._id }}/edit" class="me-2">修改</a>
-          <a href="">刪除</a>
+          <form action="/record/{{ this._id }}?_method=DELETE" method="post">
+            <button type="submit" class="delete">刪除</button>
+          </form>
         </li>
         {{/each}}
       </ul>

@@ -7,6 +7,7 @@ const category = require('../../models/category')
 
 let totalAmount = 0
 
+//Read
 router.get('/', (req, res) => {
 
   Record.find()
@@ -16,7 +17,7 @@ router.get('/', (req, res) => {
       const dark = `<li class="list-group-item list-group-item-dark">`
       let isLight = true
       
-      //先歸零
+      //先重置總花費
       totalAmount = 0
 
       //只擷取資料庫中的年、月、日

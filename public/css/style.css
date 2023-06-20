@@ -45,6 +45,17 @@ header nav {
   display: block;
 }
 
+#home .delete{
+  font-size: 20px;
+  background-color: white;
+
+  border: none;
+}
+
+#home .delete:hover {
+ color: gray;
+}
+
 /* new.hbs (new page) */
 /* edit.hbs (edit page) */
 #new, #edit{
