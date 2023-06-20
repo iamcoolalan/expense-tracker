@@ -37,9 +37,9 @@ router.get('/', (req, res) => {
         //計算總花費金額
         totalAmount += record.amount
 
-        //return Category.findOne... 將此函數傳回promise， 這樣promise才會等待此異步處理完成
+        //return Category.findById... 將此函數傳回promise， 這樣promise才會等待此異步處理完成
         //return record 回傳變更結果，才可以在後續的處理中取用物件內容
-        return Category.findOne({ _id: record.categoryId })
+        return Category.findById(record.categoryId)
           .lean()
           .then(category => {
             record.icon = category.icon

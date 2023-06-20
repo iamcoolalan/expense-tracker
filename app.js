@@ -6,13 +6,18 @@ if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config()
 }
 
+const helpers = require('./utils/hbsHelper')
 const routes = require('./routes/index')
 require('./config/mongoose')
 
 const app = express()
 const port = process.env.PORT
 
-app.engine('hbs', exhbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine('hbs', exhbs({ 
+  defaultLayout: 'main', 
+  extname: '.hbs',
+  helpers 
+}))
 app.set('view engine', 'hbs')
 
 app.use(express.static('public'))

@@ -1,0 +1,49 @@
+<div class="container" id="edit">
+  <form action="/record/edit" method="post">
+    <div class="row mb-3">
+      <div class="col-sm-2">
+        <p>*必填欄位</p>
+      </div>
+      <div class="col-sm-10">
+        <h3>請修改你的支出</h3>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="name" class="col-sm-2 col-form-label">名稱* :</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="name" id="name" value="{{ name }}">
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="date" class="col-sm-2 col-form-label">日期* :</label>
+      <div class="col-sm-10">
+        <input type="date" class="form-control" name="date" id="date" value="{{ date }}">
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="category" class="col-sm-2 col-form-label">類別* :</label>
+      <div class="col-sm-10">
+        <select id="category" name="category" class="mx-auto form-select" aria-label="Default select example">
+          <option value="類別">類別</option>
+          <option {{#if (isSame category '家居物業')}}selected{{/if}} value="家居物業">家居物業</option>
+          <option {{#if (isSame category '交通出行')}}selected{{/if}} value="交通出行">交通出行</option>
+          <option {{#if (isSame category '休閒娛樂')}}selected{{/if}} value="休閒娛樂">休閒娛樂</option>
+          <option {{#if (isSame category '餐飲食品')}}selected{{/if}} value="餐飲食品">餐飲食品</option>
+          <option {{#if (isSame category '其他')}}selected{{/if}} value="其他">其他</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="amount" class="col-sm-2 col-form-label">金額* :</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" name="amount" id="amount" value="{{ amount }}">
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <button type="submit" class="btn btn-outline-dark">送出</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -46,18 +46,20 @@ header nav {
 }
 
 /* new.hbs (new page) */
-#new{
+/* edit.hbs (edit page) */
+#new, #edit{
   padding: 5% 25%;
 }
 
-#new label{
+#new label, #edit label{
   font-size: 20px;
 }
 
-#new p{
+#new p, #edit p{
   font-size: 15px;
 }
 
-#new button{
+#new button, #edit button{
   width: 100%;
 }
+
