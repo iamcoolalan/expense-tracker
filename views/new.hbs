@@ -1,5 +1,5 @@
 <div class="container" id="new">
-  <form action="/record/new" method="post">
+  <form action="/record/new" method="post" class="needs-validation" novalidate>
     <div class="row mb-3">
       <div class="col-sm-2">
         <p>*必填欄位</p>
@@ -11,19 +11,25 @@
     <div class="row mb-3">
       <label for="name" class="col-sm-2 col-form-label">名稱* :</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" name="name" id="name" placeholder="輸入您此次花費的名稱">
+        <input type="text" class="form-control" name="name" id="name" placeholder="輸入您此次花費的名稱" required>
+        <div class="invalid-feedback">
+          請輸入此次花費的名稱
+        </div>
       </div>
     </div>
     <div class="row mb-3">
       <label for="date" class="col-sm-2 col-form-label">日期* :</label>
       <div class="col-sm-10">
-        <input type="date" class="form-control" name="date" id="date">
+        <input type="date" class="form-control" name="date" id="date" required>
+        <div class="invalid-feedback">
+          請輸入此次花費的日期
+        </div>
       </div>
     </div>
     <div class="row mb-3">
       <label for="category" class="col-sm-2 col-form-label">類別* :</label>
       <div class="col-sm-10">
-        <select id="category" name="category" class="mx-auto form-select" aria-label="Default select example">
+        <select id="category" name="category" class="mx-auto form-select" aria-label="Default select example" required>
           <option disabled selected value>類別</option>
           <option value="家居物業">家居物業</option>
           <option value="交通出行">交通出行</option>
@@ -31,12 +37,18 @@
           <option value="餐飲食品">餐飲食品</option>
           <option value="其他">其他</option>
         </select>
+        <div class="invalid-feedback">
+          請輸入此次花費的類別
+        </div>
       </div>
     </div>
     <div class="row mb-3">
       <label for="amount" class="col-sm-2 col-form-label">金額* :</label>
       <div class="col-sm-10">
-        <input type="number" class="form-control" name="amount" id="amount" placeholder="輸入您花費的金額">
+        <input type="number" class="form-control" name="amount" id="amount" placeholder="輸入您花費的金額" required>
+        <div class="invalid-feedback">
+          請輸入此次花費的金額
+        </div>
       </div>
     </div>
     <div class="row mb-3">
@@ -47,3 +59,25 @@
     </div>
   </form>
 </div>
+
+<script>
+    (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+</script>

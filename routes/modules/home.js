@@ -29,9 +29,9 @@ router.post('/sort', (req, res) => {
 
   Category.findOne({ name: categoryName })
     .then(category => {
-      if(!category){
+      if (!category) {
         res.redirect('/')
-      }else{
+      } else {
         Record.find({ categoryId: category._id })
           .lean()
           .then(records => {
