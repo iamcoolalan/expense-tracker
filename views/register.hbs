@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <div class="card card-body">
+      <h1 class="text-center">Register</h1>
+
+      <form action="/users/register" method="post">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password">
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password:</label>
+          <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
+            placeholder="Enter Password">
+        </div>
+        <button type="submit" class="btn btn-primary d-flex justify-content-center w-100">Register</button>
+        <a href="/auth/facebook" class="btn btn-info mt-3 d-flex justify-content-center w-100">Facebook</a>
+      </form>
+      <p class="lead mt-4">
+        Have An Account?
+        <a href="/users/login">Login</a>
+      </p>
+    </div>
+  </div>
+</div>
