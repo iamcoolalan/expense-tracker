@@ -24,7 +24,6 @@
       <label for="category" class="col-sm-2 col-form-label">類別* :</label>
       <div class="col-sm-10">
         <select id="category" name="category" class="mx-auto form-select" aria-label="Default select example">
-          <option value="類別">類別</option>
           <option {{#if (isSame category '家居物業')}}selected{{/if}} value="家居物業">家居物業</option>
           <option {{#if (isSame category '交通出行')}}selected{{/if}} value="交通出行">交通出行</option>
           <option {{#if (isSame category '休閒娛樂')}}selected{{/if}} value="休閒娛樂">休閒娛樂</option>

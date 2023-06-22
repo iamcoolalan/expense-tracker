@@ -1,16 +1,18 @@
 <div class="container" id="home">
   <div class="row">
     <div class="col-md-8">
-      <div class="form-group">
-        <select name="category" id="category" class="mx-auto">
-          <option value="0">類別</option>
-          <option value="1">家居物業</option>
-          <option value="2">交通出行</option>
-          <option value="3">休閒娛樂</option>
-          <option value="4">餐飲食品</option>
-          <option value="5">其他</option>
-        </select>
-      </div>
+      <form action="/sort" method="POST" id="homeSort">
+        <div class="form-group">
+          <select name="category" id="category" class="mx-auto">
+            <option disabled selected value>類別</option>
+            <option {{#if (isSame categoryName '家居物業')}} selected {{/if}} value="家居物業">家居物業</option>
+            <option {{#if (isSame categoryName '交通出行')}} selected {{/if}} value="交通出行">交通出行</option>
+            <option {{#if (isSame categoryName '休閒娛樂')}} selected {{/if}} value="休閒娛樂">休閒娛樂</option>
+            <option {{#if (isSame categoryName '餐飲食品')}} selected {{/if}} value="餐飲食品">餐飲食品</option>
+            <option {{#if (isSame categoryName '其他')}} selected {{/if}} value="其他">其他</option>
+          </select>
+        </div>
+      </form>
     </div>
     <div class="col-md-4"></div>
   </div>
@@ -64,3 +66,14 @@
     <div class="col-md-4"></div>
   </div>
 </div>
+
+<script>
+  const categorySelect = document.querySelector('#category')
+  const homeSort = document.querySelector('#homeSort')
+
+  categorySelect.addEventListener('change', event => {
+    
+    homeSort.submit()
+
+  })
+</script>

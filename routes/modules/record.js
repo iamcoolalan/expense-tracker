@@ -66,12 +66,23 @@ router.put('/:id/edit', (req, res) => {
       }else{
         Category.findOne({ name: updateRecord.category })
           .then(category => {
-            updateRecord.categoryId = category._id
-            Object.assign(record, updateRecord)
-  
-            return record.save()
+            if(!category){
+              console.log(`Can't find this category`)
+            }else{
+              updateRecord.categoryId = category._id
+              Object.assign(record, updateRecord)
+    
+              return record.save()
+            }
           })
-          .then(() => res.redirect('/'))
+          .then(completedUpdate => {
+            if(completedUpdate){
+              return res.redirect('/')
+            }else{
+              const redirectUrl = `/record/${record._id}/edit`
+              return res.redirect(redirectUrl)
+            }
+          })
           .catch(err => console.log(err))
       }
     })
