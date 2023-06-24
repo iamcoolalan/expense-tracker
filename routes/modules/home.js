@@ -10,7 +10,9 @@ let totalAmount = 0
 
 //Read
 router.get('/', (req, res) => {
-  Record.find()
+  const userId = req.user._id
+
+  Record.find({ userId })
     .lean()
     .sort({ date: 'desc' })
     .then(records => {
@@ -26,13 +28,14 @@ router.get('/', (req, res) => {
 
 router.post('/sort', (req, res) => {
   const categoryName = req.body.category
+  const userId = req.user._id
 
-  Category.findOne({ name: categoryName })
+  Category.findOne({ name: categoryName})
     .then(category => {
       if (!category) {
         res.redirect('/')
       } else {
-        Record.find({ categoryId: category._id })
+        Record.find({ categoryId: category._id, userId })
           .lean()
           .then(records => {
             const promises = functions.show(Category, records)

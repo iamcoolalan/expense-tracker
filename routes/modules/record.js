@@ -13,11 +13,13 @@ router.get('/new', (req, res) => {
 router.post('/new', (req, res) => {
   const newRecord = req.body
   const category = req.body.category
+  const userId = req.user._id
 
   Category.findOne({ name: category })
     .then(category => {
       Record.create({
         ...newRecord,
+        userId,
         categoryId: category._id
       })
         .then(() => res.redirect('/'))
@@ -30,8 +32,9 @@ router.post('/new', (req, res) => {
 //Edit
 router.get('/:id/edit', (req, res) => {
   const _id = req.params.id
+  const userId = req.user._id
 
-  Record.findOne({ _id })
+  Record.findOne({ _id, userId })
     .then(record => {
       if (!record) {
         console.log(`Can't find any result that matches this ID`)
@@ -58,8 +61,9 @@ router.get('/:id/edit', (req, res) => {
 router.put('/:id/edit', (req, res) => {
   const _id = req.params.id
   const updateRecord = req.body
+  const userId = req.user._id
 
-  Record.findOne({ _id })
+  Record.findOne({ _id, userId })
     .then(record => {
       if (!record) {
         console.log(`Can't find any result that matches this ID`)
@@ -92,8 +96,9 @@ router.put('/:id/edit', (req, res) => {
 //Delete
 router.delete('/:id', (req, res) => {
   const _id = req.params.id
+  const userId = req.user._id
 
-  Record.findOne({ _id })
+  Record.findOne({ _id, userId })
     .then(record => {
       if(!record){
         console.log(`Can't find any result that matches this ID`)
