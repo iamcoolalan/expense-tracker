@@ -30,12 +30,10 @@
       <label for="category" class="col-sm-2 col-form-label">類別* :</label>
       <div class="col-sm-10">
         <select id="category" name="category" class="mx-auto form-select" aria-label="Default select example" required>
-          <option disabled selected value>類別</option>
-          <option value="家居物業">家居物業</option>
-          <option value="交通出行">交通出行</option>
-          <option value="休閒娛樂">休閒娛樂</option>
-          <option value="餐飲食品">餐飲食品</option>
-          <option value="其他">其他</option>
+          <option disabled selected>類別</option>
+          {{#each categories}}
+          <option value="{{ this.name }}">{{ this.name }}</option>
+          {{/each}}
         </select>
         <div class="invalid-feedback">
           請輸入此次花費的類別

@@ -3,11 +3,14 @@ const router = express.Router()
 
 const Record = require('../../models/record')
 const Category = require('../../models/category')
-const category = require('../../models/category')
+
 
 //Create
 router.get('/new', (req, res) => {
-  res.render('new')
+  Category.find()
+    .lean()
+    .then(categories => res.render('new', { categories }))
+    .catch(err => console.log(err))
 })
 
 router.post('/new', (req, res) => {
@@ -43,14 +46,18 @@ router.get('/:id/edit', (req, res) => {
           .then(category => {
             const { _id, name, amount } = record
             const date = record.date.toISOString().slice(0, 10)
-  
-            res.render('edit', {
-              _id,
-              name,
-              date,
-              category: category.name,
-              amount
-            })
+
+            Category.find()
+              .lean()
+              .then(categories => res.render('edit', { 
+                categories,
+                category: category.name,
+                _id,
+                name,
+                date,
+                amount
+               }))
+              .catch(err => console.log(err))
           })
           .catch(err => console.log(err))
       }

@@ -21,12 +21,16 @@ router.get('/', (req, res) => {
     })
     .then(records => {
       totalAmount = functions.sum(records)
-      res.render('index', { records, totalAmount })
+
+      Category.find()
+        .lean()
+        .then(categories => res.render('index', { categories, records, totalAmount }))
+        .catch(err => console.log(err))
     })
     .catch(err => console.log(err))
 })
 
-router.post('/sort', (req, res) => {
+router.post('/filter', (req, res) => {
   const categoryName = req.body.category
   const userId = req.user._id
 
@@ -43,13 +47,17 @@ router.post('/sort', (req, res) => {
           })
           .then(records => {
             totalAmount = functions.sum(records)
-            res.render('index', { records, totalAmount, categoryName })
+            Category.find()
+              .lean()
+              .then(categories => res.render('index', { categoryName, categories, records, totalAmount }))
+              .catch(err => console.log(err))
           })
           .catch(err => console.log(err))
       }
     })
     .catch(err => console.log(err))
 })
+
 
 module.exports = router
 
