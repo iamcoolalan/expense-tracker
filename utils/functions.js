@@ -2,8 +2,8 @@ const record = require("../models/record")
 
 module.exports = {
   show: function (Category, records) {
-    const light = `<li class="list-group-item list-group-item-light">`
-    const dark = `<li class="list-group-item list-group-item-dark">`
+    const light = 'light'
+    const dark = 'dark'
     let isLight = true
 
     //只擷取資料庫中的年、月、日
