@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs')
 const User = require('../../models/user')
 
 router.get('/login', (req, res) => {
-  res.render('login')
+  res.status(200).render('login')
 })
 
 router.post('/login', (req, res, next) => {
@@ -14,7 +14,7 @@ router.post('/login', (req, res, next) => {
 
   if (!email || !password) {
     req.flash('login_warning_msg', '請輸入Email以及密碼');
-    return res.redirect('/users/login');
+    return res.status(401).redirect('/users/login');
   }
 
   passport.authenticate('local', {
@@ -26,7 +26,7 @@ router.post('/login', (req, res, next) => {
 })
 
 router.get('/register', (req, res) => {
-  res.render('register')
+  res.status(200).render('register')
 })
 
 router.post('/register', (req, res) => {
@@ -41,7 +41,7 @@ router.post('/register', (req, res) => {
   }
 
   if(errors.length){
-    return res.render('register',{
+    return res.status(400).render('register',{
       errors,
       name,
       email,
@@ -54,7 +54,7 @@ router.post('/register', (req, res) => {
         if (user) {
           errors.push({ message: '此Email已經註冊' })
           
-          return res.render('register', {
+          return res.status(409).render('register', {
             errors,
             name,
             email,
@@ -71,7 +71,7 @@ router.post('/register', (req, res) => {
                 password: hash
               })
             })
-            .then(() => res.redirect('/'))
+            .then(() => res.status(201).redirect('/'))
             .catch(err => console.log(err))
         }
       })
