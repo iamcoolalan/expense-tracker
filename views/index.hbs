@@ -1,7 +1,7 @@
 <div class="container" id="home">
   <div class="row">
     <div class="col-md-8">
-      <form action="/record/filter" method="POST" id="filter">
+      <form action="/records/filter" method="POST" id="filter">
         <div class="form-group">
           <select name="category" id="category" class="mx-auto">
             <option disabled selected>類別</option>
@@ -48,8 +48,8 @@
       <ul class="list-group" id="record-function">
         {{#each records}}
         <li class="list-group-item list-group-item-light d-flex align-items-center">
-          <a href="/record/{{ this._id }}/edit" class="me-2">修改</a>
-          <form action="/record/{{ this._id }}?_method=DELETE" method="post">
+          <a href="/records/{{ this._id }}/edit" class="me-2">修改</a>
+          <form action="/records/{{ this._id }}?_method=DELETE" method="post">
             <button type="submit" class="delete">刪除</button>
           </form>
         </li>
@@ -59,7 +59,7 @@
   </div>
   <div class="row">
     <div class="col-md-8">
-      <a href="/record/new" class="btn btn-warning mt-5 mx-auto" id="new-btn">新增支出</a>
+      <a href="/records/new" class="btn btn-warning mt-5 mx-auto" id="new-btn">新增支出</a>
     </div>
     <div class="col-md-4"></div>
   </div>

@@ -7,11 +7,11 @@ const auth = require('./modules/auth')
 
 const { authenticator } = require('../middleware/auth')
 
-router.use('/record', authenticator, record)
+router.use('/records', authenticator, record)
 router.use('/users', user)
 router.use('/auth', auth)
 router.use('/', (req, res ) => {
-  res.redirect('/record')
+  res.redirect('/records')
 })
 
 module.exports = router

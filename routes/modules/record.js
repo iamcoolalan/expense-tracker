@@ -222,7 +222,7 @@ router.put('/:id/edit', async (req, res) => {
     Object.assign(record, updateRecord)
 
     const completedUpdate = await record.save()
-    const redirectUrl = completedUpdate ? '/' : `/record/${record._id}/edit`
+    const redirectUrl = completedUpdate ? '/' : `/records/${record._id}/edit`
     const status = completedUpdate ? 200 : 500
 
     res.status(status).redirect(redirectUrl)
