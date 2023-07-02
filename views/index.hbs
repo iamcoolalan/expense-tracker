@@ -4,7 +4,7 @@
       <form action="/records/filter" method="POST" id="filter">
         <div class="form-group">
           <select name="category" id="category" class="mx-auto">
-            <option disabled selected>類別</option>
+            <option disabled selected value hidden>類別</option>
             {{#each categories}}
             <option {{#if (eq ../categoryName this.name)}} selected {{/if}} value={{ this.name }}>{{ this.name }}</option>
             {{/each}}
