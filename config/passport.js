@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy
+const GitHubStrategy = require('passport-github').Strategy
 
 const User = require('../models/user')
 
@@ -31,6 +32,7 @@ module.exports = app => {
     }
   ));
 
+  //Facebook
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
@@ -64,6 +66,7 @@ module.exports = app => {
 
   }))
 
+  //Google
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_ID,
     clientSecret: process.env.GOOGLE_SECRET,
@@ -72,6 +75,41 @@ module.exports = app => {
   },
     (request, accessToken, refreshToken, profile, done) => {
       const { name, email } = profile._json
+
+      User.findOne({ email })
+        .then(user => {
+          if (user) {
+            return done(null, user)
+          }
+
+          const randomPassword = Math.random().toString(36).slice(-8)
+
+          bcrypt
+            .genSalt(10)
+            .then(salt => bcrypt.hash(randomPassword, salt))
+            .then(hash => {
+              return User.create({
+                name,
+                email,
+                password: hash
+              })
+            })
+            .then(user => done(null, user))
+            .catch(err => done(err, false))
+        })
+        .catch(err => done(err, false))
+    }
+  ));
+
+  //Github
+  passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_ID,
+    clientSecret: process.env.GITHUB_SECRET,
+    callbackURL: process.env.GITHUB_CALLBACK,
+  },
+    function (accessToken, refreshToken, profile, done) {
+      const name = profile._json.name
+      const email = profile._json.email ? profile._json.email : profile.profileUrl
 
       User.findOne({ email })
         .then(user => {
