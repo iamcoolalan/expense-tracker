@@ -61,6 +61,8 @@
     - 詳細說明  
         - [MongoDB](#mongodb)
         - [Facebook](#facebook)
+        - [Google](#google)
+        - [Github](#github)
 
     #### MongoDB
       - 請先到[MongoDB](https://account.mongodb.com/account/login?_ga=2.95424735.215886225.1688086051-1089227879.1684278227)註冊
@@ -78,29 +80,37 @@
       ```
 
     #### Facebook
-      - 請先到[Facebook developers](https://developers.facebook.com/?locale=zh_TW)登入或註冊
-      - 接者跟著下列圖片進行操作
-      ##### 1.
-      ![](./public/images/facebook1.png)
-      ##### 2.
-      ![](./public/images/facebook2.png)
-      ##### 3.
-      ![](./public/images/facebook3.png)
-      ##### 4.
-      ![](./public/images/facebook4.png)
-      ##### 5.
-      ![](./public/images/facebook5.png)
-      ##### 6.
-      ![](./public/images/facebook6.png)
-      ##### 7.
-      ![](./public/images/facebook7.png)
-      - 最後將圖7的`應用程式編號`和`應用程式密鑰`填到對應的環境變數即可
+      - 請先到[Facebook developers](https://developers.facebook.com/?locale=zh_TW)登入或註冊，並完成相關前置作業。
+      - 完成後將下圖的`應用程式編號`和`應用程式密鑰`填到對應的環境變數即可
+   
+      ![](./public/images/login-facebook.png)
 
       ```bash
       FACEBOOK_ID = 應用程式編號
       FACEBOOK_SECRET = 應用程式密鑰
       ```
 
+    #### Google
+      - 請先到[Google Cloud](https://cloud.google.com/?hl=zh-tw)登入或註冊，並完成相關前置作業。
+      - 完成後將下圖的`用戶端編號`和`用戶端密鑰`填到對應的環境變數即可
+   
+      ![](./public/images/login-google.png)
+
+      ```bash
+      GOOGLE_ID = 用戶端編號
+      GOOGLE_SECRET = 用戶端密鑰
+      ```
+
+    #### Github
+      - 請先到[Github developer setting](https://github.com/settings/developers)完成相關前置作業。
+      - 完成後將下圖的`Client ID`和`Client secrets`填到對應的環境變數即可
+   
+      ![](./public/images/login-github.png)
+
+      ```bash
+      FACEBOOK_ID = Client ID
+      FACEBOOK_SECRET = Client secrets
+      ```  
 
 5. 設定完畢後，可以在終端機中輸入以下指令產生種子資料
 
