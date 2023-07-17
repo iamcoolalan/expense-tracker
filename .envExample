@@ -1,11 +1,11 @@
 FACEBOOK_ID = Facebook應用程式編號
 FACEBOOK_SECRET = Facebook應用程式密鑰
 
-GOOGLE_ID = Google應用程式編號
-GOOGLE_SECRET = Google應用程式密鑰
+GOOGLE_ID = Google用戶端編號
+GOOGLE_SECRET = Google用戶端密鑰
 
-GITHUB_ID = Github應用程式編號
-GITHUB_SECRET = Github應用程式密鑰
+GITHUB_ID = Github Client ID
+GITHUB_SECRET = Github Client secrets
 
 MONGODB_URI = mongodb+srv://<Your MongoDB Account>:<Your MongoDB Password>@cluster0.xxxx.xxxx.net/<Your MongoDB Table><?retryWrites=true&w=majority
 
