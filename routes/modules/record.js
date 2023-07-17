@@ -52,10 +52,10 @@ router.get('/', async (req, res) => {
     const totalAmount = functions.sum(records)
     const categories = await Category.find().lean()
 
-    res.status(200).render('index', { categories, records, totalAmount })
+    res.render('index', { categories, records, totalAmount })
   } catch (err) {
     console.log(err)
-    res.status(500).send('An error occurred')
+    res.send('An error occurred')
   }
 
 })
@@ -98,22 +98,25 @@ router.post('/filter', async (req, res) => {
     const totalAmount = functions.sum(records)
     const categories = await Category.find().lean()
 
-    res.status(200).render('index', { categories, categoryName, records, totalAmount })
+    res.render('index', { categories, categoryName, records, totalAmount })
 
   } catch (err) {
     console.log(err)
-    res.status(500).send('An error occurred')
+    res.send('An error occurred')
   }
 })
 
 
 //Create
 //render create page
-router.get('/new', (req, res) => {
-  Category.find()
-    .lean()
-    .then(categories => res.status(200).render('new', { categories }))
-    .catch(err => console.log(err))
+router.get('/new', async (req, res) => {
+  try {  
+    const categories = await Category.find().lean()
+
+    res.render('new', { categories })
+  }catch(err) {
+    console.log(err)
+  }
 })
 
 //create new record
@@ -129,17 +132,17 @@ router.post('/new', async (req, res) => {
       return res.status(404), send('Category not found')
     }
 
-    const createRecord = await Record.create({
+    await Record.create({
       ...newRecord,
       userId,
       categoryId: category._id
     })
 
-    res.status(201).redirect('/')
+    res.redirect('/')
 
   } catch (err) {
     console.log(err)
-    res.status(500).send('An error occurred')
+    res.send('An error occurred')
   }
 })
 
@@ -178,13 +181,13 @@ router.get('/:id/edit', async (req, res) => {
     ])
 
     if (!records.length) {
-      return res.status(404).send(`Can't find any result that matches this ID`)
+      return res.send(`Can't find any result that matches this ID`)
     }
 
     const { name, date, amount, category } = records[0]
     const categories = await Category.find().lean()
 
-    res.status(200).render('edit', {
+    res.render('edit', {
       _id,
       name,
       date,
@@ -195,7 +198,7 @@ router.get('/:id/edit', async (req, res) => {
 
   } catch (err) {
     console.log(err)
-    res.status(500).send('An error occurred')
+    res.send('An error occurred')
   }
 })
 
@@ -209,50 +212,50 @@ router.put('/:id/edit', async (req, res) => {
     const record = await Record.findOne({ _id, userId })
 
     if (!record) {
-      return res.status(404).send(`Can't find any result that matches this ID`)
+      return res.send(`Can't find any result that matches this ID`)
     }
 
     const category = await Category.findOne({ name: updateRecord.category })
 
     if (!category) {
-      return res.status(404).send(`Can't find this category`)
+      return res.send(`Can't find this category`)
     }
 
     updateRecord.categoryId = category._id
     Object.assign(record, updateRecord)
 
-    const completedUpdate = await record.save()
-    const redirectUrl = completedUpdate ? '/' : `/records/${record._id}/edit`
-    const status = completedUpdate ? 200 : 500
+    await record.save()
 
-    res.status(status).redirect(redirectUrl)
+    res.redirect(`/records/${record._id}/edit`)
     
   } catch (err) {
     console.log(err)
-    res.status(500).send('An error occurred')
+    res.send('An error occurred')
   }
 })
 
 //Delete
 //delete record
-router.delete('/:id', (req, res) => {
-  const _id = req.params.id
-  const userId = req.user._id
+router.delete('/:id', async (req, res) => {
+  try{
+    const _id = req.params.id
+    const userId = req.user._id
 
-  Record.findOne({ _id, userId })
-    .then(record => {
-      if (!record) {
-        console.log(`Can't find any result that matches this ID`)
-      } else {
-        //因為使用mongoose v7.3.0，沒有remove方法了，取而代之的就是deleteOne()
-        record.deleteOne()
-      }
-    })
-    .then(() => res.status(200).redirect('/'))
-    .catch(err => {
-      console.log(err)
-      res.status(500).send('An error occurred')
-    })
+    const record = await Record.findOne({_id, userId})
+
+    if(!record){
+      return console.log(`Can't find any result that matches this ID`)
+    }
+
+    //因為使用mongoose v7.3.0，沒有remove方法了，取而代之的就是deleteOne()
+    await record.deleteOne()
+    res.redirect('/')
+    
+  }catch(err){
+    console.log(err)
+    res.send('An error occurred')
+  }
+ 
 })
 
 module.exports = router

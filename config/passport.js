@@ -14,21 +14,24 @@ module.exports = app => {
 
   passport.use(new LocalStrategy(
     { usernameField: 'email', passReqToCallback: true },
-    (req, email, password, done) => {
-      User.findOne({ email })
-        .then(user => {
-          if (!user) {
-            return done(null, false, req.flash('login_warning_msg', '此Email還未註冊'))
-          }
-          return bcrypt.compare(password, user.password)
-            .then(isMatch => {
-              if (!isMatch) {
-                return done(null, false, req.flash('login_warning_msg', 'Email或密碼錯誤!'))
-              }
-              return done(null, user)
-            })
-        })
-        .catch(err => done(err, false))
+    async (req, email, password, done) => {
+      try {
+        const user = await User.findOne({ email })
+
+        if (!user) {
+          return done(null, false, req.flash('login_warning_msg', '此Email還未註冊'))
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password)
+
+        if (!isMatch) {
+          return done(null, false, req.flash('login_warning_msg', 'Email或密碼錯誤!'))
+        }
+        return done(null, user)
+
+      } catch (err) {
+        done(err, false)
+      }
     }
   ));
 
@@ -38,32 +41,29 @@ module.exports = app => {
     clientSecret: process.env.FACEBOOK_SECRET,
     callbackURL: process.env.FACEBOOK_CALLBACK,
     profileFields: ['email', 'displayName']
-  }, (accessToken, refreshToken, profile, done) => {
+  }, async (accessToken, refreshToken, profile, done) => {
     const { name, email } = profile._json
 
-    User.findOne({ email })
-      .then(user => {
-        if (user) {
-          return done(null, user)
-        }
+    try {
+      const user = await User.findOne({ email })
 
-        const randomPassword = Math.random().toString(36).slice(-8)
+      if (user) {
+        return done(null, user)
+      }
 
-        bcrypt
-          .genSalt(10)
-          .then(salt => bcrypt.hash(randomPassword, salt))
-          .then(hash => {
-            return User.create({
-              name,
-              email,
-              password: hash
-            })
-          })
-          .then(user => done(null, user))
-          .catch(err => done(err, false))
+      const randomPassword = Math.random().toString(36).slice(-8)
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(randomPassword, salt)
+      const newUser = await User.create({
+        name,
+        email,
+        password: hash
       })
-      .catch(err => done(err, false))
 
+      return done(null, newUser)
+    } catch (err) {
+      done(err, false)
+    }
   }))
 
   //Google
@@ -73,31 +73,29 @@ module.exports = app => {
     callbackURL: process.env.GOOGLE_CALLBACK,
     passReqToCallback: true
   },
-    (request, accessToken, refreshToken, profile, done) => {
+    async (request, accessToken, refreshToken, profile, done) => {
       const { name, email } = profile._json
 
-      User.findOne({ email })
-        .then(user => {
-          if (user) {
-            return done(null, user)
-          }
+      try {
+        const user = await User.findOne({ email })
 
-          const randomPassword = Math.random().toString(36).slice(-8)
+        if (user) {
+          return done(null, user)
+        }
 
-          bcrypt
-            .genSalt(10)
-            .then(salt => bcrypt.hash(randomPassword, salt))
-            .then(hash => {
-              return User.create({
-                name,
-                email,
-                password: hash
-              })
-            })
-            .then(user => done(null, user))
-            .catch(err => done(err, false))
+        const randomPassword = Math.random().toString(36).slice(-8)
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(randomPassword, salt)
+        const newUser = await User.create({
+          name,
+          email,
+          password: hash
         })
-        .catch(err => done(err, false))
+
+        return done(null, newUser)
+      } catch (err) {
+        done(err, false)
+      }
     }
   ));
 
@@ -107,32 +105,30 @@ module.exports = app => {
     clientSecret: process.env.GITHUB_SECRET,
     callbackURL: process.env.GITHUB_CALLBACK,
   },
-    function (accessToken, refreshToken, profile, done) {
+    async (accessToken, refreshToken, profile, done) => {
       const name = profile._json.name
-      const email = profile._json.email ? profile._json.email : profile.profileUrl
+      const email = profile._json.email || profile.profileUrl
 
-      User.findOne({ email })
-        .then(user => {
-          if (user) {
-            return done(null, user)
-          }
+      try {
+        const user = await User.findOne({ email })
 
-          const randomPassword = Math.random().toString(36).slice(-8)
+        if (user) {
+          return done(null, user)
+        }
 
-          bcrypt
-            .genSalt(10)
-            .then(salt => bcrypt.hash(randomPassword, salt))
-            .then(hash => {
-              return User.create({
-                name,
-                email,
-                password: hash
-              })
-            })
-            .then(user => done(null, user))
-            .catch(err => done(err, false))
+        const randomPassword = Math.random().toString(36).slice(-8)
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(randomPassword, salt)
+        const newUser = await User.create({
+          name,
+          email,
+          password: hash
         })
-        .catch(err => done(err, false))
+
+        return done(null, newUser)
+      } catch (err) {
+        done(err, false)
+      }
     }
   ));
 
@@ -140,10 +136,12 @@ module.exports = app => {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function (id, done) {
-    User.findById(id)
-      .lean()
-      .then(user => done(null, user))
-      .catch(err => done(err, null))
+  passport.deserializeUser(async function (id, done) {
+    try {
+      const user = await User.findById(id).lean()
+      done(null, user)
+    } catch (err) {
+      done(err, null)
+    }
   });
 }
