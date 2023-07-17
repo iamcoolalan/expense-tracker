@@ -1,9 +1,35 @@
-<div class="row">
+<div class="row" id="login">
   <div class="col-md-6 mx-auto">
     <div class="card card-body">
-      <h1 class="text-center">Login</h1>
+      <h1 class="text-center">Login Your Account</h1>
       {{> message}}
-      <form action="/users/login" method="post">
+      <div class="d-flex flex-column align-items-center mt-3">
+        <div>
+        <p class="lead mt-3">
+          Don't have an Account?
+          <a href="/users/register">Register</a>
+        </p>
+        </div>
+        <div class="container mx-3 d-flex justify-content-center">
+          <a href="/auth/facebook" class="ms-2">
+            <i class="fa-brands fa-facebook fa-2xl"></i>
+          </a>
+          <a href="/auth/google" class="ms-2">
+            <i class="fa-brands fa-google fa-2xl"></i>
+          </a>
+          <a href="/auth/github" class="ms-2">
+            <i class="fa-brands fa-github fa-2xl"></i>
+          </a>
+        </div>
+      </div>
+      <div id="breakPoint">
+        <div class="line"></div>
+        <span>
+          Or with email and password
+        </span>
+        <div class="line"></div>
+      </div>
+      <form action="/users/login" method="post" class="mt-3">
         <div class="mb-3">
           <label for="email" class="form-label">Email:</label>
           <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
@@ -12,15 +38,9 @@
           <label for="password" class="form-label">Password:</label>
           <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password">
         </div>
-        <button type="submit" class="btn btn-primary d-flex justify-content-center w-100">Login</button>
-        <a href="/auth/facebook" class="btn btn-info mt-3 d-flex justify-content-center w-100">Facebook</a>
-        <a href="/auth/google" class="btn btn-warning mt-3 d-flex justify-content-center w-100">Google</a>
-        <a href="/auth/github" class="btn btn-info mt-3 d-flex justify-content-center w-100">Github</a>
+        <button type="submit" class="btn btn-primary d-flex justify-content-center w-100 mt-4">Login</button>
+
       </form>
-      <p class="lead mt-4">
-        No Account?
-        <a href="/users/register">Register</a>
-      </p>
     </div>
   </div>
 </div>

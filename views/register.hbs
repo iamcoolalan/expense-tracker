@@ -1,8 +1,34 @@
-<div class="row">
+<div class="row" id="register">
   <div class="col-md-6 mx-auto">
     <div class="card card-body">
-      <h1 class="text-center">Register</h1>
+      <h1 class="text-center">Create your account</h1>
       {{> message}}
+      <div class="d-flex flex-column align-items-center mt-3">
+        <div>
+          <p class="lead mt-3">
+            Have an Account?
+            <a href="/users/login">Log in now</a>
+          </p>
+        </div>
+        <div class="container mx-3 d-flex justify-content-center">
+          <a href="/auth/facebook" class="ms-2">
+            <i class="fa-brands fa-facebook fa-2xl"></i>
+          </a>
+          <a href="/auth/google" class="ms-2">
+            <i class="fa-brands fa-google fa-2xl"></i>
+          </a>
+          <a href="/auth/github" class="ms-2">
+            <i class="fa-brands fa-github fa-2xl"></i>
+          </a>
+        </div>
+      </div>
+      <div id="breakPoint">
+        <div class="line"></div>
+        <span>
+          Or with email and password
+        </span>
+        <div class="line"></div>
+      </div>
       <form action="/users/register" method="post">
         <div class="mb-3">
           <label for="name" class="form-label">Name:</label>
@@ -21,13 +47,8 @@
           <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
             placeholder="Enter Password" value="{{ confirmPassword }}">
         </div>
-        <button type="submit" class="btn btn-primary d-flex justify-content-center w-100">Register</button>
-        <a href="/auth/facebook" class="btn btn-info mt-3 d-flex justify-content-center w-100">Facebook</a>
+        <button type="submit" class="btn btn-primary d-flex justify-content-center w-100 mt-4">Register</button>
       </form>
-      <p class="lead mt-4">
-        Have An Account?
-        <a href="/users/login">Login</a>
-      </p>
     </div>
   </div>
 </div>

@@ -78,3 +78,31 @@ header nav {
   width: 100%;
 }
 
+#login i, #register i{
+  color: gray;
+}
+
+#login i:hover, #register i:hover {
+  color: black;
+}
+
+#login #breakPoint, #register #breakPoint{
+  display: flex;
+  align-items: center;
+
+  margin: 20px 0;
+}
+
+#login #breakPoint span, #register #breakPoint span {
+  font-size: 16px;
+  margin: 0 15px;
+
+  color: gray;
+}
+
+#login #breakPoint .line, #register #breakPoint .line{
+  flex: 1;
+  position: relative;
+
+  border-bottom: 1px solid rgb(193, 199, 198);
+}
